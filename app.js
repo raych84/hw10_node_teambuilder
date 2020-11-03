@@ -14,30 +14,6 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-	inquirer
-	.prompt([
-	  {
-		type: "confirm",
-		message: "Let's build your new team!",
-		name: "message"
-	  },
-	  {
-		type: "confirm",
-		message: "Shall we begin?",
-		name: "validate"
-	  },
-	  
-	])
-	.then(function(response){
-		if(response.validate === true){
-			function buildNewTeam();
-		}
-		else {
-			console.log("Come back when you're ready!");
-		}
-		return
-	})
-	
 function buildNewTeam(){
 
 }
@@ -50,129 +26,90 @@ function addManager(){
 	  {
 		type: "input",
 		message: "What is the manager's name?",
-		name: "manager name"
+		name: "managerName"
 	  },
 	  {
 		type: "number",
 		message: "What is the manager's id number?",
-		name: "manager id"
+		name: "managerId"
 	  },
 	  {
 		type: "input",
 		message: "What is the manager's email address?",
-		name: "manager email"
+		name: "managerEmail"
 	  },
 	  {
 		type: "number",
 		message: "What is the manager's office number?",
-		name: "office number"
+		name: "officeNumber"
 	  }
 	])
-	.then(function(answer) {
-  
-	  var filename = manager.html.toLowerCase().split(' ').join('') + ".json";
 	
-	  fs.writeFile(filename, JSON.stringify(answer, null, '\t'), function(err) {
-	
-		if (err) {
-		  return console.log(err);
-		}
-	
-		console.log("Success!");
-	
-	  });
-	});
 		
 };
+
 function addEngineer(){
 	inquirer
 	.prompt([
 	  {
 		type: "input",
 		message: "What is the engineer's name?",
-		name: "engineer name"
+		name: "engineerName"
 	  },
 	  {
 		type: "input",
 		message: "What is the engineer's gitHub username?",
-		name: "gitHub name"
+		name: "gitHubName"
 	  },
 	  {
 		type: "number",
 		message: "What is the engineers's id number?",
-		name: "engineer id"
+		name: "engineerId"
 	  },
 	  {
 		type: "input",
 		message: "What is the engineer's email address?",
-		name: "engineer email"
+		name: "engineerEmail"
 	  }
 	  
 	])
-	.then(function(answer) {
-  
-	  var filename = answer.name.toLowerCase().split(' ').join('') + ".json";
-	
-	  fs.writeFile(filename, JSON.stringify(answer, null, '\t'), function(err) {
-	
-		if (err) {
-		  return console.log(err);
-		}
-	
-		console.log("Success!");
-	
-	  });
-	});
-		
+
 };
-function addIntern(){
+function addIntern(answers){
 	inquirer
 	.prompt([
 	  {
 		type: "input",
 		message: "What is the intern's name?",
-		name: "intern name"
+		name: "internName"
 	  },
 	  {
 		type: "input",
 		message: "What is the intern's school name?",
-		name: "school name"
+		name: "schoolName"
 	  },
 	  {
 		type: "number",
 		message: "What is the intern's id number?",
-		name: "intern id"
+		name: "internId"
 	  },
 	  {
 		type: "input",
 		message: "What is the intern's email address?",
-		name: "intern email"
+		name: "internEmail"
 	  }
-	])
-	.then(function(answer) {
-  
-	  var filename = answer.name.toLowerCase().split(' ').join('') + ".json";
-	
-	  fs.writeFile(filename, JSON.stringify(answer, null, '\t'), function(err) {
-	
-		if (err) {
-		  return console.log(err);
-		}
-	
-		console.log("Success!");
-	
-	  });
-	});
-		
-};
+	]).then(answers) => {
+		const intern = new Intern(answer.interName, answer.schoolName, answer.interId, answer.internEmail)
+	}
+}
 
 
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-employees => {
-	html.push
+
+fs.writeFileSync(outhPath, render(teamMemebers), "utf-8");
 }
 
 // After you have your html, you're now ready to create an HTML file using the HTML
